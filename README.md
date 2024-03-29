@@ -1,6 +1,10 @@
-# bloc_pattern_api_practice
+# Project Screenshot
 
-A new Flutter project.
+<html>
+<body>
+    <img src="https://github.com/bara2brh/Flutter_Bloc-Dio_Project/blob/main/assets/Screenshot%202024-03-29%20143021.png?raw=true">
+</body>
+</html>
 
 ## Getting Started
 
