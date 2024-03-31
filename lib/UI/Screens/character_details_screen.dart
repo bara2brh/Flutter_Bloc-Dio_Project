@@ -18,7 +18,7 @@ class CharacterDetailsScreen extends StatelessWidget {
         centerTitle: false,
         title: Text(
           character.name,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         background: Hero(
           tag: character.id,
@@ -71,13 +71,13 @@ class CharacterDetailsScreen extends StatelessWidget {
           SliverList(
               delegate: SliverChildListDelegate([
             Container(
-              margin: EdgeInsets.fromLTRB(14, 14, 14, 0),
-              padding: EdgeInsets.all(8),
+              margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   characterInfo('Status : ', character.status),
@@ -93,7 +93,7 @@ class CharacterDetailsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 430,
             ),
           ])),

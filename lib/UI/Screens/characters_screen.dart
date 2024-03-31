@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 import '../../Data/Models/character.dart';
 
@@ -143,7 +144,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
         ),
         shrinkWrap: true,
         padding: EdgeInsets.zero,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: _searchController.text.isNotEmpty
             ? searchedCharacters.length
             : allCharacters.length,
@@ -164,19 +165,59 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
+  Widget buildNoInternetWidget() {
+    return Center(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Can\'t connect .. check your internet connection !',
+              style: TextStyle(
+                fontSize: 17,
+                color: AppColors.appGrey,
+              ),
+            ),
+            Image.asset('assets/images/no_internet.png')
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appGrey,
-        appBar: AppBar(
-          backgroundColor: AppColors.appGreen,
-          title: _isSearching ? _buildSearchField() : _buildAppBarTitle(),
-          leading: _isSearching
-              ? const BackButton(
-                  color: Colors.white,
-                )
-              : null,
-          actions: _buildAppBarActions(),
-        ),
-        body: buildBlockWidget());
+      appBar: AppBar(
+        backgroundColor: AppColors.appGreen,
+        title: _isSearching ? _buildSearchField() : _buildAppBarTitle(),
+        leading: _isSearching
+            ? const BackButton(
+                color: Colors.white,
+              )
+            : null,
+        actions: _buildAppBarActions(),
+      ),
+      body: OfflineBuilder(
+        connectivityBuilder: (
+          BuildContext context,
+          ConnectivityResult connectivity,
+          Widget child,
+        ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+
+          if (connected) {
+            return buildBlockWidget();
+          } else {
+            return buildNoInternetWidget();
+          }
+        },
+        child: showLoading(),
+      ),
+    );
   }
 }
